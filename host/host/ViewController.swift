@@ -23,47 +23,42 @@ class PrimaryNavController: UIViewController {
     }
 
     @objc func goToSecondPage() {
-        getDelegate().router.navigateTo(path: [Path("root", "Main.Page1"), Path("root", "Main.Page2")])
+        getDelegate().router.navigateTo(relative: [Path("root", "Main.Page2")])
     }
     
     @objc func goToSubnav() {
-        getDelegate().router.navigateTo(path: [Path("root", "Main.Page1"), Path("root", "Main.Subnavigation", false), Path("subnav", "Main.SubRoot"), Path("subnav", "Main.Page2")])
+        getDelegate().router.navigateTo(relative: [Path("root", "Main.Subnavigation"), Path("subnav", "Main.Page2")])
     }
     
     @objc func goToModal() {
-        getDelegate().router.navigateTo(path: [Path("root", "Main.Page1"), Path("modal", "Main.Subnavigation", false), Path("subnav", "Main.SubRoot"), Path("subnav", "Main.Page2")])
+        getDelegate().router.navigateTo(relative: [Path("modal", "Main.Subnavigation", true), Path("subnav", "Main.Page2", false)])
     }
 }
 
-class RoutingNavController: UINavigationController {
-    @objc func back() {
-        getDelegate().router.back()
+class RoutingNavController: RoutableNavigationController {
+    lazy var displayer = { return ModalDisplayer(nav: self) }()
+    override func getRouter() -> NavigationRouter {
+        return getDelegate().router
     }
-    
-    override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
-        if getDelegate().router.canBack {
-            let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(back))
-            viewControllers.last?.navigationItem.leftBarButtonItem = backButton
-        } else {
-            viewControllers.last?.navigationItem.leftBarButtonItem = nil
-        }
-        super.setViewControllers(viewControllers, animated: animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        getDelegate().router.addDisplayer(displayer, named: "modal")
     }
 }
 
-class SubRoutingController: RoutingNavController {
+class SubRoutingController: RoutableNavigationController {
+    lazy var displayer = { return NavigationDisplayer(nav: self) }()
+    override func getRouter() -> NavigationRouter {
+        return getDelegate().router
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getDelegate().router.addDisplayer(StandardDisplayer(nav: UINavigationControllerAdapter(wrapped: self)), named: "subnav")
+        getDelegate().router.addDisplayer(displayer, named: "subnav")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getDelegate().router.removeDisplayer(named: "subnav")
-    }
-    
-    override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
-        super.setViewControllers(viewControllers, animated: animated)
     }
 }
 
@@ -76,8 +71,6 @@ class SubPageOneController: UIViewController {
     }
     
     @objc func pageTwo() {
-        var path = getDelegate().router.currentPath
-        path.append(Path("subnav", "Main.Page2"))
-        getDelegate().router.navigateTo(path: path)
+        getDelegate().router.navigateTo(relative: [Path("subnav", "Main.Page2")])
     }
 }

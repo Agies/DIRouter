@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C389F3F420EF149C006756CC /* RoutableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C389F3F320EF149C006756CC /* RoutableNavigationController.swift */; };
 		C3A711ED20EBB36400322860 /* Router.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A711E320EBB36400322860 /* Router.framework */; };
 		C3A711F220EBB36400322860 /* RouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A711F120EBB36400322860 /* RouterTests.swift */; };
 		C3A711F420EBB36400322860 /* Router.h in Headers */ = {isa = PBXBuildFile; fileRef = C3A711E620EBB36400322860 /* Router.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C389F3F320EF149C006756CC /* RoutableNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutableNavigationController.swift; sourceTree = "<group>"; };
 		C3A711E320EBB36400322860 /* Router.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Router.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3A711E620EBB36400322860 /* Router.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Router.h; sourceTree = "<group>"; };
 		C3A711E720EBB36400322860 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,6 +76,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C389F3F220EF147D006756CC /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C389F3F320EF149C006756CC /* RoutableNavigationController.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		C3A711D920EBB36400322860 = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +114,7 @@
 				C3A7120920EBFAEB00322860 /* Aliases.swift */,
 				C3A7120B20EBFB1000322860 /* UIViewController+NavigationController.swift */,
 				C3A7121120EC06CD00322860 /* PropertyStoring.swift */,
+				C389F3F220EF147D006756CC /* Helpers */,
 			);
 			path = router;
 			sourceTree = "<group>";
@@ -235,6 +246,7 @@
 				C3A7120A20EBFAEB00322860 /* Aliases.swift in Sources */,
 				C3A7121220EC06CD00322860 /* PropertyStoring.swift in Sources */,
 				C3A7120020EBBD1C00322860 /* NavigationRouter.swift in Sources */,
+				C389F3F420EF149C006756CC /* RoutableNavigationController.swift in Sources */,
 				C3A7120C20EBFB1000322860 /* UIViewController+NavigationController.swift in Sources */,
 				C3A7120820EBFAC200322860 /* UINavigationController+Completions.swift in Sources */,
 				C3A7120620EBFA7700322860 /* Provider.swift in Sources */,

@@ -17,8 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        router.addDisplayer(StandardDisplayer(nav: UINavigationControllerAdapter(wrapped: window?.rootViewController as! UINavigationController)), named: "root")
-        router.addDisplayer(StandardDisplayer(nav: UIViewControllerAdapter(wrapped: window?.rootViewController as! UINavigationController)), named: "modal")
+        router.addDisplayer(NavigationDisplayer(nav: window?.rootViewController as! UINavigationController), named: "root")
+        router.navigateTo(path: [Path("root", "Main.Page1")])
+//        router.navigateTo(path: [Path("root", "Main.Page1"), Path("modal", "Main.Subnavigation", true), Path("subnav", "Main.Page2", false)])
         return true
     }
 

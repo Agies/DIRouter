@@ -17,24 +17,26 @@ class MockProvider: ControllerProvider, HasMocker, PropertyStoring, New {
     }
 }
 
-class MockDisplayer: Displayer, HasMocker, PropertyStoring, New {
+class MockDisplayer: NSObject, Displayer, HasMocker, PropertyStoring, New {
     func back(_ name: String, animate: Bool, completion: @escaping (Bool) -> Void) {
         
     }
     
-    required init() {}
+    required override init() {}
     func show(_ names: [String], animate: Bool, completion: Action?) {
         mocker.addCall("show", data: ["names": names, "animate": animate, "completion": completion as Any])
         completion?()
     }
 }
 
-class MockNavigationController: NavigationController, HasMocker, PropertyStoring, New {
+class MockNavigationController: NSObject, NavigationController, HasMocker, PropertyStoring, New {
+    var rootViewController: UIViewController?
+    
     func back(_ controller: UIViewController, animate: Bool, completion: Action?) {
         
     }
     
-    required init() {}
+    required override init() {}
     func show(_ controllers: [UIViewController], animate: Bool, completion: Action?) {
         mocker.addCall("show", data: ["controllers": controllers, "animate": animate, "completion": completion as Any])
         completion?()

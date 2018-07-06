@@ -13,6 +13,7 @@ public protocol ControllerProvider {
 }
 
 public class StoryboardControllerProvider: ControllerProvider {
+    static public var shared = StoryboardControllerProvider()
     var controllers = [String: WeakWrapper]()
     let bundle: Bundle
     public init(bundle: Bundle = Bundle.main) {

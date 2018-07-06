@@ -57,6 +57,19 @@ class RouterTests: XCTestCase {
         XCTAssertEqual(true, mock2.getCall("show")?["animate"] as? Bool)
     }
     
+    func testNavigateTo_will_call_display_on_all_displayers_evem_if_not_on_path() {
+        let mock = MockDisplayer();
+        let mock2 = MockDisplayer();
+        sut.addDisplayer(mock, named: "nav")
+        sut.addDisplayer(mock2, named: "other")
+        sut.navigateTo(path: [Path("nav", "foo"), Path("nav", "bar")])
+        XCTAssertEqual(["foo", "bar"], mock.getCall("show")?["names"] as? [String])
+        XCTAssertEqual([], mock2.getCall("show")?["names"] as? [String])
+        
+        XCTAssertEqual(true, mock.getCall("show")?["animate"] as? Bool)
+        XCTAssertEqual(true, mock2.getCall("show")?["animate"] as? Bool)
+    }
+    
     func testBack_will_go_back_one_path() {
         let mock = MockDisplayer();
         let mock2 = MockDisplayer();
@@ -83,5 +96,20 @@ class RouterTests: XCTestCase {
         
         XCTAssertEqual(true, mock.getCall("show", index: 1)?["animate"] as? Bool)
         XCTAssertEqual(true, mock2.getCall("show", index: 1)?["animate"] as? Bool)
+    }
+    
+    func testNavigateTo_will_store_a_path_if_a_Displayer_is_missing() {
+        let mock = MockDisplayer();
+        let mock2 = MockDisplayer();
+        sut.addDisplayer(mock, named: "nav")
+        
+        sut.navigateTo(path: [Path("nav", "foo"), Path("nav", "bar"), Path("other", "zed")])
+        XCTAssertEqual(["foo", "bar"], mock.getCall("show")?["names"] as? [String])
+        XCTAssertNil(mock2.getCall("show")?["names"] as? [String])
+        XCTAssertEqual(false, mock.getCall("show")?["animate"] as? Bool)
+        
+        sut.addDisplayer(mock2, named: "other")
+        XCTAssertEqual(["zed"], mock2.getCall("show")?["names"] as? [String])
+        XCTAssertEqual(true, mock2.getCall("show")?["animate"] as? Bool)
     }
 }
